@@ -48,3 +48,16 @@ console.log('server started on 5000');
 
 //FORMAT OF TOKEN 
 //Authorization: Bearer <access_token>
+
+function verifyToken(req,res,next){
+const bearerHeader = req.headers['authorization'];
+//check if bearer is undefined
+if(typeof bearerHeader !== 'undefined'){
+//split at the space
+const bearer = bearerHeader.split(' ');
+const token = bearer[1];
+req.token = token;
+next();
+}else{
+res.sendStatus(403);
+}
